@@ -19,7 +19,7 @@ Each language or tool has its own Dockerfile, making it easy to build and run co
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/docker-dev-env.git
+git clone https://github.com/ankitpise/docker-dev-env.git
 cd docker-dev-env
 ```
 
@@ -30,6 +30,7 @@ cd docker-dev-env
 Each language or tool has its own directory with a corresponding Dockerfile. Follow the steps below for your desired environment:
 
 #### Node.js
+
 1. Navigate to the Node.js folder:
    ```bash
    cd node
@@ -44,7 +45,11 @@ Each language or tool has its own directory with a corresponding Dockerfile. Fol
    ```bash
    alias node='docker run --rm -it -v "$(pwd):/usr/src/app" -w /usr/src/app node-dev node'
    alias npm='docker run --rm -it -v "$(pwd):/usr/src/app" -w /usr/src/app node-dev npm'
-   alias firebase='docker run --rm -it -v "$(pwd):/usr/src/app" -w /usr/src/app node-dev firebase'
+   alias firebase='docker run --rm -it \
+   -v "$(pwd):/usr/src/app" \
+   -v "$HOME/.config/firebase:/root/.config/configstore" \
+   -w /usr/src/app \
+   node-dev firebase'
    ```
 
 4. Reload your shell configuration:
@@ -57,8 +62,47 @@ Each language or tool has its own directory with a corresponding Dockerfile. Fol
    ```bash
    node --version      # Check Node.js version
    npm install         # Install dependencies
-   firebase login      # Log in to Firebase
    ```
+
+---
+
+### 3. Logging into Firebase CLI
+
+When using the Firebase CLI inside a Docker container, the standard `firebase login` command may not work directly because it tries to launch a browser on the host machine. To address this, use the `--no-localhost` option, which provides a URL and an authentication code for manual login.
+
+#### Steps to Login to Firebase CLI
+
+1. Run the login command with the `--no-localhost` option:
+   ```bash
+   firebase login --no-localhost
+   ```
+
+2. The CLI will output a URL like this:
+   ```
+   Visit this URL on any device to log in:
+   https://accounts.google.com/o/oauth2/auth?client_id=...
+   ```
+
+3. Copy the URL and paste it into your browser on the host machine. Log in with your Google account.
+
+4. After logging in, the browser will display an authorization code. Copy the code.
+
+5. Paste the code into the terminal running in the Docker container:
+   ```
+   Enter authorization code:
+   <paste-code-here>
+   ```
+
+6. Once logged in, your credentials will be saved in the mapped volume (`~/.config/firebase` on your host machine). This allows the session to persist across container runs.
+
+#### Verify Your Login
+
+After logging in, verify that the session works by running:
+```bash
+firebase projects:list
+```
+
+This should list all your Firebase projects.
 
 ---
 
@@ -83,7 +127,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-### Repository Structure
+## Repository Structure
 
 ```
 docker-dev-env/
