@@ -62,27 +62,6 @@ Each language or tool has its own directory with a corresponding Dockerfile. Fol
 
 ---
 
-### 3. Add More Environments
-
-#### Python (Example)
-- Navigate to the Python folder:
-  ```bash
-  cd python
-  ```
-
-- Build the Docker image:
-  ```bash
-  docker build -t python-dev -f python.Dockerfile .
-  ```
-
-- Add the following alias:
-  ```bash
-  alias python='docker run --rm -it -v "$(pwd):/usr/src/app" -w /usr/src/app python-dev python'
-  alias pip='docker run --rm -it -v "$(pwd):/usr/src/app" -w /usr/src/app python-dev pip'
-  ```
-
----
-
 ## Benefits of Using Docker for Development
 
 - **Clean Host Environment**: Avoid cluttering your system with multiple versions of tools or programming languages.
@@ -101,7 +80,6 @@ Feel free to add Dockerfiles for other languages or tools! Open a pull request w
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-```
 
 ---
 
@@ -119,3 +97,4 @@ docker-dev-env/
 │   ├── php.Dockerfile
 │   ├── README.md
 └── README.md
+```
