@@ -5,7 +5,7 @@ FROM node:lts-alpine
 WORKDIR /usr/src/app
 
 # Install global tools necessary for development
-RUN npm install -g firebase-tools
+RUN npm install -g firebase-tools typescript
 
 # Default command to keep the container lightweight
 CMD ["node"]

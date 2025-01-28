@@ -50,6 +50,7 @@ Each language or tool has its own directory with a corresponding Dockerfile. Fol
    -v "$HOME/.config/firebase:/root/.config/configstore" \
    -w /usr/src/app \
    node-dev firebase'
+   alias tsc='docker run --rm -it --init -v "$(pwd):/usr/src/app" -w /usr/src/app node-dev tsc'
    ```
 
 4. Reload your shell configuration:
