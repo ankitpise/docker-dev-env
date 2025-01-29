@@ -43,9 +43,9 @@ Each language or tool has its own directory with a corresponding Dockerfile. Fol
 
 3. Add the following aliases to your shell configuration (`~/.zshrc` or `~/.bashrc`):
    ```bash
-   alias node='docker run --rm -it -v "$(pwd):/usr/src/app" -w /usr/src/app node-dev node'
-   alias npm='docker run --rm -it -v "$(pwd):/usr/src/app" -w /usr/src/app node-dev npm'
-   alias firebase='docker run --rm -it \
+   alias node='docker run --rm -it --init -v "$(pwd):/usr/src/app" -w /usr/src/app node-dev node'
+   alias npm='docker run --rm -it --init -v "$(pwd):/usr/src/app" -w /usr/src/app node-dev npm'
+   alias firebase='docker run --rm -it --init \
    -v "$(pwd):/usr/src/app" \
    -v "$HOME/.config/firebase:/root/.config/configstore" \
    -w /usr/src/app \
